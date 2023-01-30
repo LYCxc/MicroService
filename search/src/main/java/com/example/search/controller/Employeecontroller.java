@@ -24,10 +24,20 @@ public class Employeecontroller {
     private static final Logger LOGGER = LoggerFactory.getLogger(Employeecontroller.class);
     @Autowired
     EmployeeService employeeService;
+
     @GetMapping()
     @ResponseBody
-    public CompletableFuture<ResponseEntity<List<Object>>> getAll() throws InterruptedException {
-      return employeeService.getAll().<ResponseEntity<List<Object>>>thenApply(ResponseEntity::ok);
-    }
+    public ResponseEntity getAll() throws InterruptedException {
+        try {
+            CompletableFuture<List<Object>> list1=employeeService.getAll();
+            CompletableFuture<List<Object>> list2=employeeService.getAll();
+            CompletableFuture<List<Object>> list3=employeeService.getAll();
+            CompletableFuture.allOf(list1, list2, list3).join();
+            return ResponseEntity.status(HttpStatus.OK).build();
 
+        } catch (final Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+
+    }
 }

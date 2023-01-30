@@ -2,7 +2,10 @@ package com.example.search.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -36,6 +39,6 @@ public class EmployeeServiceimpl implements  EmployeeService{
     @Async
     public CompletableFuture<List<Object>> getAll() throws InterruptedException {
 
-       return  CompletableFuture.completedFuture(restTemplate.getForObject(url,List.class));
+        return  CompletableFuture.completedFuture(restTemplate.getForObject(url,List.class));
     }
 }
